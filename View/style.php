@@ -1,10 +1,3 @@
-<!--
-  Core Framework - View File
-
-  @license    MIT (https://mit-license.org/)
-  @author     Full Name <user@domain.com>
--->
-
 <style>
     :root {
         --success: #4CAF50;

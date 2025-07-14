@@ -1,9 +1,3 @@
-<!--
-  Core Framework - View File
-
-  @license    MIT (https://mit-license.org/)
-  @author     Full Name <user@domain.com>
--->
 <?php if(!$this->Config->get('application', 'installed')): ?>
     <!DOCTYPE html>
     <html>
@@ -18,7 +12,7 @@
                 <div class="d-flex flex-column justify-content-center align-items-center" style="padding: 2rem;">
                     <h1 class="text-center w-100"><?= $this->label() ?></h1>
                     <div>
-                        <?php if(in_array('DATABASE',$this->call('modules'))): ?>
+                        <?php if(in_array('DATABASE',$this->call('core'))): ?>
                             <div id="database" data-toggle="collapse" class="form-group collapse">
                                 <label><h4><?= $this->Locale->get('Database') ?></h4></label>
                                 <div class="input-wrapper">
@@ -39,7 +33,7 @@
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <?php if(in_array('SMTP',$this->call('modules'))): ?>
+                        <?php if(in_array('SMTP',$this->call('core'))): ?>
                             <div id="smtp" data-toggle="collapse" class="form-group collapse">
                                 <label><h4><?= $this->Locale->get('SMTP') ?></h4></label>
                                 <div class="input-wrapper">
@@ -61,7 +55,7 @@
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <?php if(in_array('IMAP',$this->call('modules'))): ?>
+                        <?php if(in_array('IMAP',$this->call('core'))): ?>
                             <div id="imap" data-toggle="collapse" class="form-group collapse">
                                 <label><h4><?= $this->Locale->get('IMAP') ?></h4></label>
                                 <div class="input-wrapper">
@@ -76,7 +70,7 @@
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <?php if(in_array('AUTH',$this->call('modules'))): ?>
+                        <?php if(in_array('AUTH',$this->call('core'))): ?>
                             <div id="identification" data-toggle="collapse" class="form-group collapse">
                                 <label><h4><?= $this->Locale->get('Identification') ?></h4></label>
                                 <div class="input-wrapper">
@@ -90,12 +84,12 @@
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <?php if(in_array('INSTALLER',$this->call('modules'))): ?>
+                        <?php if(in_array('INSTALLER',$this->call('core'))): ?>
                             <div id="application" data-toggle="collapse" class="form-group collapse">
                                 <label><h4><?= $this->Locale->get('Application Branding') ?></h4></label>
                                 <div class="input-wrapper">
                                     <div class="input"><input type="text" name="application_name" placeholder="<?= $this->Locale->get('Brand') ?>" value="<?= $this->Config->get('application','name') ?? $this->Config->get('installer','name') ?>" required></div>
-                                    <?php if(!in_array('AUTH',$this->call('modules'))): ?>
+                                    <?php if(!in_array('AUTH',$this->call('core'))): ?>
                                         <div class="input"><input type="text" name="application_owner" placeholder="<?= $this->Locale->get('Organization') ?>" value="<?= $this->Config->get('application','owner') ?? '' ?>" required></div>
                                     <?php endif; ?>
                                     <div class="input"><input type="number" name="application_copyright" placeholder="<?= $this->Locale->get('Copyright') ?>" value="<?= $this->Config->get('application','copyright') ?? date('Y') ?>" required></div>
@@ -109,7 +103,7 @@
                         <div id="validation" data-toggle="collapse" class="form-group collapse">
                             <label><h4><?= $this->Locale->get('Validation') ?></h4></label>
                             <div class="row">
-                                <?php if(in_array('DATABASE',$this->call('modules'))): ?>
+                                <?php if(in_array('DATABASE',$this->call('core'))): ?>
                                     <div class="col container-group">
                                         <label data-target="database"><?= $this->Locale->get('Database') ?></label>
                                         <div>
@@ -138,7 +132,7 @@
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <?php if(in_array('SMTP',$this->call('modules'))): ?>
+                                <?php if(in_array('SMTP',$this->call('core'))): ?>
                                     <div class="col container-group">
                                         <label data-target="smtp"><?= $this->Locale->get('SMTP') ?></label>
                                         <div>
@@ -163,7 +157,7 @@
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <?php if(in_array('IMAP',$this->call('modules'))): ?>
+                                <?php if(in_array('IMAP',$this->call('core'))): ?>
                                     <div class="col container-group">
                                         <label data-target="imap"><?= $this->Locale->get('IMAP') ?></label>
                                         <div>
@@ -184,7 +178,7 @@
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <?php if(in_array('AUTH',$this->call('modules'))): ?>
+                                <?php if(in_array('AUTH',$this->call('core'))): ?>
                                     <div class="col container-group">
                                         <label data-target="identification"><?= $this->Locale->get('Identification') ?></label>
                                         <div>
@@ -201,14 +195,14 @@
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <?php if(in_array('INSTALLER',$this->call('modules'))): ?>
+                                <?php if(in_array('INSTALLER',$this->call('core'))): ?>
                                     <div class="col container-group">
                                         <label data-target="application"><?= $this->Locale->get('Application Branding') ?></label>
                                         <div>
                                             <strong><?= $this->Locale->get('Name') ?></strong>
                                             <span class="float-end" data-field="application_name"></span>
                                         </div>
-                                        <?php if(!in_array('AUTH',$this->call('modules'))): ?>
+                                        <?php if(!in_array('AUTH',$this->call('core'))): ?>
                                             <div>
                                                 <strong><?= $this->Locale->get('Organization') ?></strong>
                                                 <span class="float-end" data-field="application_owner"></span>
@@ -336,7 +330,7 @@
                     setTimeout(() => {
 
                         // Install the database module
-                        <?php if(in_array('DATABASE',$this->call('modules'))): ?>
+                        <?php if(in_array('DATABASE',$this->call('core'))): ?>
 
                             // Create function
                             function installDatabase() {
@@ -387,7 +381,7 @@
                         <?php endif; ?>
 
                         // Install the smtp module
-                        <?php if(in_array('SMTP',$this->call('modules'))): ?>
+                        <?php if(in_array('SMTP',$this->call('core'))): ?>
 
                             // Create function
                             function installSMTP() {
@@ -437,7 +431,7 @@
                         <?php endif; ?>
 
                         // Install the imap module
-                        <?php if(in_array('IMAP',$this->call('modules'))): ?>
+                        <?php if(in_array('IMAP',$this->call('core'))): ?>
 
                             // Create function
                             function installIMAP() {
@@ -486,7 +480,7 @@
                         <?php endif; ?>
 
                         // Install the auth module
-                        <?php if(in_array('AUTH',$this->call('modules'))): ?>
+                        <?php if(in_array('AUTH',$this->call('core'))): ?>
 
                             // Create function
                             function installAuth() {
@@ -534,7 +528,7 @@
                         <?php endif; ?>
 
                         // Install the style module
-                        <?php if(in_array('INSTALLER',$this->call('modules'))): ?>
+                        <?php if(in_array('INSTALLER',$this->call('core'))): ?>
 
                             // Create function
                             function installApplication() {
@@ -552,7 +546,7 @@
                                             copyright: $('[name="application_copyright"]').val(),
                                             owner: $('[name="application_owner"]').val()
                                         };
-                                        <?php if(in_array('AUTH',$this->call('modules'))): ?>
+                                        <?php if(in_array('AUTH',$this->call('core'))): ?>
                                             data.owner = $('[name="identification_organization"]').val();
                                         <?php endif; ?>
 
@@ -591,19 +585,19 @@
                             try {
 
                                 // Execute the promises sequentially
-                                <?php if(in_array('DATABASE',$this->call('modules'))): ?>
+                                <?php if(in_array('DATABASE',$this->call('core'))): ?>
                                     await installDatabase();
                                 <?php endif; ?>
-                                <?php if(in_array('SMTP',$this->call('modules'))): ?>
+                                <?php if(in_array('SMTP',$this->call('core'))): ?>
                                     await installSMTP();
                                 <?php endif; ?>
-                                <?php if(in_array('IMAP',$this->call('modules'))): ?>
+                                <?php if(in_array('IMAP',$this->call('core'))): ?>
                                     await installIMAP();
                                 <?php endif; ?>
-                                <?php if(in_array('AUTH',$this->call('modules'))): ?>
+                                <?php if(in_array('AUTH',$this->call('core'))): ?>
                                     await installAuth();
                                 <?php endif; ?>
-                                <?php if(in_array('INSTALLER',$this->call('modules'))): ?>
+                                <?php if(in_array('INSTALLER',$this->call('core'))): ?>
                                     await installApplication();
                                 <?php endif; ?>
 

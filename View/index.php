@@ -221,7 +221,7 @@
                         </div>
                         <div id="installation" data-toggle="collapse" class="form-group collapse">
                             <div class="spinner"></div>
-                            <div class="label"></div>
+                            <div class="label" style="padding-top: 2rem;"></div>
                         </div>
                     </div>
                 </div>

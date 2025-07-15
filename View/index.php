@@ -221,6 +221,7 @@
                         </div>
                         <div id="installation" data-toggle="collapse" class="form-group collapse">
                             <div class="spinner"></div>
+                            <div class="label"></div>
                         </div>
                     </div>
                 </div>
@@ -341,31 +342,24 @@
                                     // Try & Catch
                                     try {
 
-                                        // Retrieve the form data
-                                        var data = {
-                                            module: 'DATABASE',
-                                            connector: $('[name="database_connector"]').val(),
-                                            host: $('[name="database_host"]').val(),
-                                            database: $('[name="database_database"]').val(),
-                                            username: $('[name="database_username"]').val(),
-                                            password: $('[name="database_password"]').val(),
-                                            sample: $('[name="database_sample"]').is(':checked')
-                                        };
-
-                                        // Add the CSRF Token
-                                        data[CSRF_KEY] = CSRF_TOKEN;
+                                        // Update the label
+                                        $('#installation').find('.label').text("<?= $this->Locale->get('Configuring and Creating Database...') ?>");
 
                                         // Start the installation
                                         $.ajax({
-                                            url: '/endpoint.php/installer/install',
+                                            url: '/api/installer/install',
+                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
                                             type: 'POST',dataType: 'json',
-                                            data: data,
+                                            data: {
+                                                module: 'DATABASE',
+                                                connector: $('[name="database_connector"]').val(),
+                                                host: $('[name="database_host"]').val(),
+                                                database: $('[name="database_database"]').val(),
+                                                username: $('[name="database_username"]').val(),
+                                                password: $('[name="database_password"]').val(),
+                                                sample: $('[name="database_sample"]').is(':checked')
+                                            },
                                             success: function(response) {
-                                                console.log(response);
-
-                                                // Update the CSRF
-                                                CSRF_KEY = response.CSRF.key;
-                                                CSRF_TOKEN = response.CSRF.token;
 
                                                 // Resolve the promise
                                                 resolve();
@@ -392,30 +386,23 @@
                                     // Try & Catch
                                     try {
 
-                                        // Retrieve the form data
-                                        var data = {
-                                            module: 'SMTP',
-                                            host: $('[name="smtp_host"]').val(),
-                                            port: $('[name="smtp_port"]').val(),
-                                            encryption: $('[name="smtp_encryption"]').val(),
-                                            username: $('[name="smtp_username"]').val(),
-                                            password: $('[name="smtp_password"]').val()
-                                        };
-
-                                        // Add the CSRF Token
-                                        data[CSRF_KEY] = CSRF_TOKEN;
+                                        // Update the label
+                                        $('#installation').find('.label').text("<?= $this->Locale->get('Configuring SMTP Server...') ?>");
 
                                         // Start the installation
                                         $.ajax({
-                                            url: '/endpoint.php/installer/install',
+                                            url: '/api/installer/install',
+                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
                                             type: 'POST',dataType: 'json',
-                                            data: data,
+                                            data: {
+                                                module: 'SMTP',
+                                                host: $('[name="smtp_host"]').val(),
+                                                port: $('[name="smtp_port"]').val(),
+                                                encryption: $('[name="smtp_encryption"]').val(),
+                                                username: $('[name="smtp_username"]').val(),
+                                                password: $('[name="smtp_password"]').val()
+                                            },
                                             success: function(response) {
-                                                console.log(response);
-
-                                                // Update the CSRF
-                                                CSRF_KEY = response.CSRF.key;
-                                                CSRF_TOKEN = response.CSRF.token;
 
                                                 // Resolve the promise
                                                 resolve();
@@ -442,29 +429,22 @@
                                     // Try & Catch
                                     try {
 
-                                        // Retrieve the form data
-                                        var data = {
-                                            module: 'IMAP',
-                                            host: $('[name="imap_host"]').val(),
-                                            port: $('[name="imap_port"]').val(),
-                                            username: $('[name="imap_username"]').val(),
-                                            password: $('[name="imap_password"]').val()
-                                        };
-
-                                        // Add the CSRF Token
-                                        data[CSRF_KEY] = CSRF_TOKEN;
+                                        // Update the label
+                                        $('#installation').find('.label').text("<?= $this->Locale->get('Configuring IMAP Server...') ?>");
 
                                         // Start the installation
                                         $.ajax({
-                                            url: '/endpoint.php/installer/install',
+                                            url: '/api/installer/install',
+                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
                                             type: 'POST',dataType: 'json',
-                                            data: data,
+                                            data: {
+                                                module: 'IMAP',
+                                                host: $('[name="imap_host"]').val(),
+                                                port: $('[name="imap_port"]').val(),
+                                                username: $('[name="imap_username"]').val(),
+                                                password: $('[name="imap_password"]').val()
+                                            },
                                             success: function(response) {
-                                                console.log(response);
-
-                                                // Update the CSRF
-                                                CSRF_KEY = response.CSRF.key;
-                                                CSRF_TOKEN = response.CSRF.token;
 
                                                 // Resolve the promise
                                                 resolve();
@@ -491,31 +471,90 @@
                                     // Try & Catch
                                     try {
 
-                                        // Retrieve the form data
-                                        var data = {
-                                            module: 'AUTH',
-                                            organization: $('[name="identification_organization"]').val(),
-                                            username: $('[name="identification_username"]').val(),
-                                            password: $('[name="identification_password"]').val()
-                                        };
-
-                                        // Add the CSRF Token
-                                        data[CSRF_KEY] = CSRF_TOKEN;
+                                        // Update the label
+                                        $('#installation').find('.label').text("<?= $this->Locale->get('Configuring Authentication Service...') ?>");
 
                                         // Start the installation
                                         $.ajax({
-                                            url: '/endpoint.php/installer/install',
+                                            url: '/api/installer/install',
+                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
                                             type: 'POST',dataType: 'json',
-                                            data: data,
+                                            data: {
+                                                module: 'AUTH',
+                                                organization: $('[name="identification_organization"]').val(),
+                                                username: $('[name="identification_username"]').val(),
+                                                password: $('[name="identification_password"]').val()
+                                            },
                                             success: function(response) {
-                                                console.log(response);
-
-                                                // Update the CSRF
-                                                CSRF_KEY = response.CSRF.key;
-                                                CSRF_TOKEN = response.CSRF.token;
 
                                                 // Resolve the promise
                                                 resolve();
+                                            }
+                                        });
+                                    } catch (error) {
+
+                                        // Reject the promise
+                                        reject(error);
+                                    }
+                                });
+                            }
+                        <?php endif; ?>
+
+                        // Install the required extensions
+                        <?php if(!empty($this->call('modules')) || !empty($this->call('plugins')) || !empty($this->call('themes'))): ?>
+
+                            // Create function
+                            function installExtensions() {
+
+                                // Create a promise
+                                return new Promise((resolve, reject) => {
+
+                                    // Try & Catch
+                                    try {
+
+                                        // Update the label
+                                        $('#installation').find('.label').text("<?= $this->Locale->get('Retrieving Required Extensions...') ?>");
+
+                                        // AJAX Request
+                                        $.ajax({
+                                            url: '/api/installer/required',
+                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
+                                            type: 'GET',dataType: 'json',
+                                            success: function(response) {
+                                                let count = 0;
+
+                                                for(const [type, extensions] of Object.entries(response)){
+                                                    count += Object.keys(extensions).length;
+                                                }
+
+                                                // Update the label
+                                                $('#installation').find('.label').text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + ")");
+
+                                                for(const [type, extensions] of Object.entries(response)){
+                                                    for(const [key, extension] of Object.entries(extensions)){
+
+                                                        // AJAX Request
+                                                        $.ajax({
+                                                            url: '/api/extensions/install?type='+extension.type+'&base='+extension.base,
+                                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
+                                                            type: 'GET',dataType: 'json',
+                                                            success: function(response) {
+
+                                                                // Decrease the count
+                                                                count--;
+
+                                                                // Update the label
+                                                                $('#installation').find('.label').text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + ")");
+
+                                                                // Check if all extensions are installed
+                                                                if(count == 0){
+                                                                    // Resolve the promise
+                                                                    resolve();
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }
                                             }
                                         });
                                     } catch (error) {
@@ -539,6 +578,9 @@
                                     // Try & Catch
                                     try {
 
+                                        // Update the label
+                                        $('#installation').find('.label').text("<?= $this->Locale->get('Configuring Application...') ?>");
+
                                         // Retrieve the form data
                                         var data = {
                                             module: 'INSTALLER',
@@ -550,22 +592,13 @@
                                             data.owner = $('[name="identification_organization"]').val();
                                         <?php endif; ?>
 
-                                        // Add the CSRF Token
-                                        data[CSRF_KEY] = CSRF_TOKEN;
-
-                                        console.log(data);
-
                                         // Start the installation
                                         $.ajax({
-                                            url: '/endpoint.php/installer/install',
+                                            url: '/api/installer/install',
+                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
                                             type: 'POST',dataType: 'json',
                                             data: data,
                                             success: function(response) {
-                                                console.log(response);
-
-                                                // Update the CSRF
-                                                CSRF_KEY = response.CSRF.key;
-                                                CSRF_TOKEN = response.CSRF.token;
 
                                                 // Resolve the promise
                                                 resolve();
@@ -597,12 +630,18 @@
                                 <?php if(in_array('AUTH',$this->call('core'))): ?>
                                     await installAuth();
                                 <?php endif; ?>
+                                <?php if(!empty($this->call('modules')) || !empty($this->call('plugins')) || !empty($this->call('themes'))): ?>
+                                    await installExtensions();
+                                <?php endif; ?>
                                 <?php if(in_array('INSTALLER',$this->call('core'))): ?>
                                     await installApplication();
                                 <?php endif; ?>
 
                                 // At this point, all awaited promises above have resolved (no errors).
                                 console.log("done");
+
+                                // Update the label
+                                $('#installation').find('.label').text("<?= $this->Locale->get('Installation Completed') ?>");
 
                                 // Redirect to the home page after spinner spinner-100 of 5 seconds
                                 $('#installation').children().first().removeClass('spinner-25').addClass('spinner-100').text('5');

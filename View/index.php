@@ -221,7 +221,7 @@
                         </div>
                         <div id="installation" data-toggle="collapse" class="form-group collapse">
                             <div class="spinner"></div>
-                            <div class="label" style="padding-top: 2rem;"></div>
+                            <div class="label" style="padding-top: 1rem;"></div>
                         </div>
                     </div>
                 </div>
@@ -522,37 +522,42 @@
                                             type: 'GET',dataType: 'json',
                                             success: function(response) {
                                                 let count = 0;
+                                                let total = 0;
 
                                                 for(const [type, extensions] of Object.entries(response)){
-                                                    count += Object.keys(extensions).length;
+                                                    if(type !== 'core'){
+                                                        total += Object.keys(extensions).length;
+                                                    }
                                                 }
 
                                                 // Update the label
-                                                $('#installation').find('.label').text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + ")");
+                                                $('#installation').find('.label').text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + " of " + total + ")");
 
                                                 for(const [type, extensions] of Object.entries(response)){
-                                                    for(const [key, extension] of Object.entries(extensions)){
+                                                    if(type !== 'core'){
+                                                        for(const [key, extension] of Object.entries(extensions)){
 
-                                                        // AJAX Request
-                                                        $.ajax({
-                                                            url: '/api/extensions/install?type='+type+'&base='+extension,
-                                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                                            type: 'GET',dataType: 'json',
-                                                            success: function(response) {
+                                                            // AJAX Request
+                                                            $.ajax({
+                                                                url: '/api/extensions/install?type='+type+'&base='+extension,
+                                                                headers: {'X-CSRF-Authorization': CSRF_KEY},
+                                                                type: 'GET',dataType: 'json',
+                                                                success: function(response) {
 
-                                                                // Decrease the count
-                                                                count--;
+                                                                    // Increase the count
+                                                                    count++;
 
-                                                                // Update the label
-                                                                $('#installation').find('.label').text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + ")");
+                                                                    // Update the label
+                                                                    $('#installation').find('.label').text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + " of " + total + ")");
 
-                                                                // Check if all extensions are installed
-                                                                if(count == 0){
-                                                                    // Resolve the promise
-                                                                    resolve();
+                                                                    // Check if all extensions are installed
+                                                                    if(count == total){
+                                                                        // Resolve the promise
+                                                                        resolve();
+                                                                    }
                                                                 }
-                                                            }
-                                                        });
+                                                            });
+                                                        }
                                                     }
                                                 }
                                             }

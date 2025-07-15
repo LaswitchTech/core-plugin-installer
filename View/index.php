@@ -535,7 +535,7 @@
 
                                                         // AJAX Request
                                                         $.ajax({
-                                                            url: '/api/extensions/install?type='+extension.type+'&base='+extension.base,
+                                                            url: '/api/extensions/install?type='+type+'&base='+extension,
                                                             headers: {'X-CSRF-Authorization': CSRF_KEY},
                                                             type: 'GET',dataType: 'json',
                                                             success: function(response) {

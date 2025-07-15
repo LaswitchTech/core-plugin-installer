@@ -22,6 +22,7 @@ class InstallerEndpoint extends Endpoint {
 
         // Set Properties
         switch($namespace){
+            case "/installer/required":
             case "/installer/install":
                 $this->Level = 1;
                 break;
@@ -157,6 +158,14 @@ class InstallerEndpoint extends Endpoint {
 
         // Return the message
         return $message;
+    }
+
+    /**
+     * Retrieve the required extensions
+     */
+    public function requiredAction()
+    {
+        return ["status" => 200,"message" => "OK","data" => $this->Config->get('requirement')];
     }
 
     /**

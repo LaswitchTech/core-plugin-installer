@@ -632,11 +632,11 @@
                                 <?php if(in_array('IMAP',$this->call('core'))): ?>
                                     await installIMAP();
                                 <?php endif; ?>
-                                <?php if(in_array('AUTH',$this->call('core'))): ?>
-                                    await installAuth();
-                                <?php endif; ?>
                                 <?php if(!empty($this->call('modules')) || !empty($this->call('plugins')) || !empty($this->call('themes'))): ?>
                                     await installExtensions();
+                                <?php endif; ?>
+                                <?php if(in_array('AUTH',$this->call('core'))): ?>
+                                    await installAuth();
                                 <?php endif; ?>
                                 <?php if(in_array('INSTALLER',$this->call('core'))): ?>
                                     await installApplication();

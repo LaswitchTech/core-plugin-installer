@@ -459,47 +459,6 @@
                             }
                         <?php endif; ?>
 
-                        // Install the auth module
-                        <?php if(in_array('AUTH',$this->call('core'))): ?>
-
-                            // Create function
-                            function installAuth() {
-
-                                // Create a promise
-                                return new Promise((resolve, reject) => {
-
-                                    // Try & Catch
-                                    try {
-
-                                        // Update the label
-                                        $('#installation').find('.label').text("<?= $this->Locale->get('Configuring Authentication Service...') ?>");
-
-                                        // Start the installation
-                                        $.ajax({
-                                            url: '/api/installer/install',
-                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                            type: 'POST',dataType: 'json',
-                                            data: {
-                                                module: 'AUTH',
-                                                organization: $('[name="identification_organization"]').val(),
-                                                username: $('[name="identification_username"]').val(),
-                                                password: $('[name="identification_password"]').val()
-                                            },
-                                            success: function(response) {
-
-                                                // Resolve the promise
-                                                resolve();
-                                            }
-                                        });
-                                    } catch (error) {
-
-                                        // Reject the promise
-                                        reject(error);
-                                    }
-                                });
-                            }
-                        <?php endif; ?>
-
                         // Install the required extensions
                         <?php if(!empty($this->call('modules')) || !empty($this->call('plugins')) || !empty($this->call('themes'))): ?>
 
@@ -560,6 +519,47 @@
                                                         }
                                                     }
                                                 }
+                                            }
+                                        });
+                                    } catch (error) {
+
+                                        // Reject the promise
+                                        reject(error);
+                                    }
+                                });
+                            }
+                        <?php endif; ?>
+
+                        // Install the auth module
+                        <?php if(in_array('AUTH',$this->call('core'))): ?>
+
+                            // Create function
+                            function installAuth() {
+
+                                // Create a promise
+                                return new Promise((resolve, reject) => {
+
+                                    // Try & Catch
+                                    try {
+
+                                        // Update the label
+                                        $('#installation').find('.label').text("<?= $this->Locale->get('Configuring Authentication Service...') ?>");
+
+                                        // Start the installation
+                                        $.ajax({
+                                            url: '/api/installer/install',
+                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
+                                            type: 'POST',dataType: 'json',
+                                            data: {
+                                                module: 'AUTH',
+                                                organization: $('[name="identification_organization"]').val(),
+                                                username: $('[name="identification_username"]').val(),
+                                                password: $('[name="identification_password"]').val()
+                                            },
+                                            success: function(response) {
+
+                                                // Resolve the promise
+                                                resolve();
                                             }
                                         });
                                     } catch (error) {
@@ -632,11 +632,11 @@
                                 <?php if(in_array('IMAP',$this->call('core'))): ?>
                                     await installIMAP();
                                 <?php endif; ?>
-                                <?php if(in_array('AUTH',$this->call('core'))): ?>
-                                    await installAuth();
-                                <?php endif; ?>
                                 <?php if(!empty($this->call('modules')) || !empty($this->call('plugins')) || !empty($this->call('themes'))): ?>
                                     await installExtensions();
+                                <?php endif; ?>
+                                <?php if(in_array('AUTH',$this->call('core'))): ?>
+                                    await installAuth();
                                 <?php endif; ?>
                                 <?php if(in_array('INSTALLER',$this->call('core'))): ?>
                                     await installApplication();

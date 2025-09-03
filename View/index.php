@@ -478,7 +478,7 @@
                                             let total = 0;
 
                                             for(const [type, extensions] of Object.entries(response)){
-                                                if(type !== 'core'){
+                                                if(['modules','plugins','themes'].includes(type)){
                                                     total += Object.keys(extensions).length;
                                                 }
                                             }
@@ -492,6 +492,12 @@
                                                         promises.push(function(label){
                                                             return new Promise((res, rej) => {
 
+                                                                // Increase the count
+                                                                count++;
+
+                                                                // Update the label
+                                                                label.text("<?= $this->Locale->get('Installing Required Extensions') ?> ("+type+":"+extension+")... (" + count + " of " + total + ")");
+
                                                                 // AJAX Request
                                                                 $.ajax({
                                                                     url: '/api/extensions/install?type='+type+'&base='+extension,
@@ -499,16 +505,10 @@
                                                                     type: 'GET',dataType: 'json',
                                                                     error: function(xhr, status, error) {
                                                                         console.error('Error installing this extension:', error);
-                                                                        label.text("<?= $this->Locale->get('Error Installing Extension') ?>: " + extension).css('color', 'red');
+                                                                        label.text("<?= $this->Locale->get('Error Installing Extension') ?> ("+type+":"+extension+")...").css('color', 'red');
                                                                         rej(error);
                                                                     },
                                                                     success: function(response) {
-
-                                                                        // Increase the count
-                                                                        count++;
-
-                                                                        // Update the label
-                                                                        label.text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + " of " + total + ")");
 
                                                                         // Resolve the promise
                                                                         res();

@@ -460,11 +460,19 @@
                                     // Update the label
                                     $('#installation').find('.label').text("<?= $this->Locale->get('Retrieving Required Extensions...') ?>");
 
+                                    // Create an array to hold promises
+                                    const promises = [];
+
                                     // AJAX Request
                                     $.ajax({
                                         url: '/api/installer/required',
                                         headers: {'X-CSRF-Authorization': CSRF_KEY},
                                         type: 'GET',dataType: 'json',
+                                        error: function(xhr, status, error) {
+                                            console.error('Error retrieving required extensions:', error);
+                                            $('#installation').find('.label').text("<?= $this->Locale->get('Error Retrieving Required Extensions') ?>").css('color', 'red');
+                                            reject(error);
+                                        },
                                         success: function(response) {
                                             let count = 0;
                                             let total = 0;
@@ -481,30 +489,46 @@
                                             for(const [type, extensions] of Object.entries(response)){
                                                 if(type !== 'core'){
                                                     for(const [key, extension] of Object.entries(extensions)){
+                                                        promises.push(function(label){
+                                                            return new Promise((res, rej) => {
 
-                                                        // AJAX Request
-                                                        $.ajax({
-                                                            url: '/api/extensions/install?type='+type+'&base='+extension,
-                                                            headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                                            type: 'GET',dataType: 'json',
-                                                            success: function(response) {
+                                                                // AJAX Request
+                                                                $.ajax({
+                                                                    url: '/api/extensions/install?type='+type+'&base='+extension,
+                                                                    headers: {'X-CSRF-Authorization': CSRF_KEY},
+                                                                    type: 'GET',dataType: 'json',
+                                                                    error: function(xhr, status, error) {
+                                                                        console.error('Error installing this extension:', error);
+                                                                        label.text("<?= $this->Locale->get('Error Installing Extension') ?>: " + extension).css('color', 'red');
+                                                                        rej(error);
+                                                                    },
+                                                                    success: function(response) {
 
-                                                                // Increase the count
-                                                                count++;
+                                                                        // Increase the count
+                                                                        count++;
 
-                                                                // Update the label
-                                                                $('#installation').find('.label').text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + " of " + total + ")");
+                                                                        // Update the label
+                                                                        label.text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + " of " + total + ")");
 
-                                                                // Check if all extensions are installed
-                                                                if(count == total){
-                                                                    // Resolve the promise
-                                                                    resolve();
-                                                                }
-                                                            }
+                                                                        // Resolve the promise
+                                                                        res();
+                                                                    },
+                                                                });
+                                                            });
                                                         });
                                                     }
                                                 }
                                             }
+
+                                            // Loop through the records
+                                            for(const [key, promise] of Object.entries(promises)){
+
+                                                // Execute the promises sequentially
+                                                await promise($('#installation').find('.label'));
+                                            }
+
+                                            // Resolve the promise
+                                            resolve();
                                         }
                                     });
                                 } catch (error) {

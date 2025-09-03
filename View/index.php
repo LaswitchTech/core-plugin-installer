@@ -473,7 +473,7 @@
                                             $('#installation').find('.label').text("<?= $this->Locale->get('Error Retrieving Required Extensions') ?>").css('color', 'red');
                                             reject(error);
                                         },
-                                        success: function(response) {
+                                        success: async function(response) {
                                             let count = 0;
                                             let total = 0;
 

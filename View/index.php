@@ -487,7 +487,7 @@
                                             $('#installation').find('.label').text("<?= $this->Locale->get('Installing Required Extensions...') ?> (" + count + " of " + total + ")");
 
                                             for(const [type, extensions] of Object.entries(response)){
-                                                if(type !== 'core'){
+                                                if(['modules','plugins','themes'].includes(type)){
                                                     for(const [key, extension] of Object.entries(extensions)){
                                                         promises.push(function(label){
                                                             return new Promise((res, rej) => {

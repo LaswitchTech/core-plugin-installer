@@ -192,7 +192,7 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('<i class="bi bi-x-lg"></i>');
                                                         label.text("<?= $this->Locale->get('Error configuring or creating database!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
@@ -360,7 +360,7 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('<i class="bi bi-x-lg"></i>');
                                                         label.text("<?= $this->Locale->get('Error configuring SMTP server!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
@@ -528,7 +528,7 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('<i class="bi bi-x-lg"></i>');
                                                         label.text("<?= $this->Locale->get('Error configuring IMAP server!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
@@ -585,7 +585,7 @@
                                                                 type: 'GET',dataType: 'json',
                                                                 error: function(xhr, status, error) {
                                                                     console.error('Error installing this extension:', error);
-                                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('<i class="bi bi-x-lg"></i>');
                                                                     label.text("<?= $this->Locale->get('Error Installing Extension') ?> ("+type+":"+extension+")...").css('color', 'red');
                                                                     reject(error);
                                                                 },
@@ -715,7 +715,7 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('<i class="bi bi-x-lg"></i>');
                                                         label.text("<?= $this->Locale->get('Error configuring authentication service!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
@@ -883,7 +883,7 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('<i class="bi bi-x-lg"></i>');
                                                         label.text("<?= $this->Locale->get('Error configuring application!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },

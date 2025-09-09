@@ -1,0 +1,62 @@
+.installer {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    padding: var(--bs-spacer-3);
+
+    * {
+        transition: all 0.3s ease;
+    }
+
+    .card {
+        max-width: 768px;
+
+        h1 {
+            text-align: center;
+            width: 100%;
+            margin-top: var(--bs-spacer-4);
+            margin-bottom: var(--bs-spacer-4);
+            font-weight: lighter;
+        }
+
+        .stepper {
+            .stepper-steps {
+                .accordion {
+                    .collapse {
+                        .row {
+                            > *:first-child {
+                                margin-top: 0;
+                            }
+                        }
+
+                        &.row {
+                            .col {
+                                .card {
+                                    .card-header {
+                                        cursor: pointer;
+
+                                        &:hover {
+                                            background-color: var(--bs-secondary-bg);
+                                        }
+                                    }
+
+                                    .card-body {
+                                        .card-value {
+                                            cursor: pointer;
+
+                                            &:hover {
+                                                background-color: var(--bs-tertiary-bg);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

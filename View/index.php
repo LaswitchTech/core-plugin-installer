@@ -317,7 +317,7 @@
                                                     label: builder.Locale.get('Username'),
                                                     placeholder: builder.Locale.get('Enter username'),
                                                     style: 'floating',
-                                                    value: "<?= $this->Config->get('smtp','username') ?? 'root' ?>",
+                                                    value: "<?= $this->Config->get('smtp','username') ?? '' ?>",
                                                     required: true,
                                                     class: {
                                                         component: 'col-12',
@@ -485,7 +485,7 @@
                                                     label: builder.Locale.get('Username'),
                                                     placeholder: builder.Locale.get('Enter username'),
                                                     style: 'floating',
-                                                    value: "<?= $this->Config->get('imap','username') ?? 'root' ?>",
+                                                    value: "<?= $this->Config->get('imap','username') ?? '' ?>",
                                                     required: true,
                                                     class: {
                                                         component: 'col-12',
@@ -770,12 +770,14 @@
                                             class:{
                                                 component: 'row g-3 m-0',
                                             },
-                                            val: function(values){
-                                                values.module = 'INSTALLER';
-                                                if(typeof values.owner === 'undefined'){
-                                                    values.owner = Steps.identification.form.input('organization').val();
-                                                }
-                                                return values;
+                                            callback:{
+                                                val: function(values){
+                                                    values.module = 'INSTALLER';
+                                                    if(typeof values.owner === 'undefined'){
+                                                        values.owner = Steps.identification.form.input('organization').val();
+                                                    }
+                                                    return values;
+                                                },
                                             },
                                         },
                                         function(form, component){

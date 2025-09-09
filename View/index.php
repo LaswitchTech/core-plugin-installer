@@ -176,7 +176,7 @@
                                     );
 
                                     // Add a promise to the promises array
-                                    Promises.modules.push(function(label, length = 0, key = 0){
+                                    Promises.modules.push(function(label, spinner, length = 0, key = 0){
                                         return new Promise((resolve, reject) => {
 
                                             // Try & Catch
@@ -192,6 +192,8 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        label.text("<?= $this->Locale->get('Error configuring or creating database!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
                                                     success: function(response) {
@@ -342,7 +344,7 @@
                                     );
 
                                     // Add a promise to the promises array
-                                    Promises.modules.push(function(label, length = 0, key = 0){
+                                    Promises.modules.push(function(label, spinner, length = 0, key = 0){
                                         return new Promise((resolve, reject) => {
 
                                             // Try & Catch
@@ -358,6 +360,8 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        label.text("<?= $this->Locale->get('Error configuring SMTP server!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
                                                     success: function(response) {
@@ -508,7 +512,7 @@
                                     );
 
                                     // Add a promise to the promises array
-                                    Promises.modules.push(function(label, length = 0, key = 0){
+                                    Promises.modules.push(function(label, spinner, length = 0, key = 0){
                                         return new Promise((resolve, reject) => {
 
                                             // Try & Catch
@@ -524,6 +528,8 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        label.text("<?= $this->Locale->get('Error configuring IMAP server!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
                                                     success: function(response) {
@@ -563,7 +569,7 @@
                                             for(const [key, extension] of Object.entries(extensions)){
 
                                                 // Add a promise to the promises array
-                                                Promises.extensions.push(function(label, length = 0, key = 0){
+                                                Promises.extensions.push(function(label, spinner, length = 0, key = 0){
                                                     return new Promise((resolve, reject) => {
 
                                                         // Try & Catch
@@ -579,6 +585,7 @@
                                                                 type: 'GET',dataType: 'json',
                                                                 error: function(xhr, status, error) {
                                                                     console.error('Error installing this extension:', error);
+                                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
                                                                     label.text("<?= $this->Locale->get('Error Installing Extension') ?> ("+type+":"+extension+")...").css('color', 'red');
                                                                     reject(error);
                                                                 },
@@ -692,7 +699,7 @@
                                     );
 
                                     // Add a promise to the promises array
-                                    Promises.application.push(function(label, length = 0, key = 0){
+                                    Promises.application.push(function(label, spinner, length = 0, key = 0){
                                         return new Promise((resolve, reject) => {
 
                                             // Try & Catch
@@ -708,6 +715,8 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        label.text("<?= $this->Locale->get('Error configuring authentication service!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
                                                     success: function(response) {
@@ -856,7 +865,7 @@
                                     );
 
                                     // Add a promise to the promises array
-                                    Promises.application.push(function(label, length = 0, key = 0){
+                                    Promises.application.push(function(label, spinner, length = 0, key = 0){
                                         return new Promise((resolve, reject) => {
 
                                             // Try & Catch
@@ -872,6 +881,8 @@
                                                     type: 'POST',dataType: 'json',
                                                     data: step.form.val(),
                                                     error: function(xhr, status, error) {
+                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-4 border-danger').html('x-lg');
+                                                        label.text("<?= $this->Locale->get('Error configuring application!') ?>").css('color', 'red');
                                                         reject(new Error(xhr.responseJSON.message ?? error));
                                                     },
                                                     success: function(response) {
@@ -977,7 +988,7 @@
                                     for(const [type, promises] of Object.entries(Promises)){
                                         const length = promises.length;
                                         for(const [key, promise] of Object.entries(promises)){
-                                            await promise(step.label, length, parseInt(key)+1);
+                                            await promise(step.label, step.spinner, length, parseInt(key)+1);
                                         }
                                     }
 

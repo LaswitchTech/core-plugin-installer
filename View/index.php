@@ -317,7 +317,7 @@
                                                     label: builder.Locale.get('Username'),
                                                     placeholder: builder.Locale.get('Enter username'),
                                                     style: 'floating',
-                                                    value: "<?= $this->Config->get('smtp','username') ?? 'root' ?>",
+                                                    value: "<?= $this->Config->get('smtp','username') ?? '' ?>",
                                                     required: true,
                                                     class: {
                                                         component: 'col-12',
@@ -485,7 +485,7 @@
                                                     label: builder.Locale.get('Username'),
                                                     placeholder: builder.Locale.get('Enter username'),
                                                     style: 'floating',
-                                                    value: "<?= $this->Config->get('imap','username') ?? 'root' ?>",
+                                                    value: "<?= $this->Config->get('imap','username') ?? '' ?>",
                                                     required: true,
                                                     class: {
                                                         component: 'col-12',

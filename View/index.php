@@ -770,12 +770,14 @@
                                             class:{
                                                 component: 'row g-3 m-0',
                                             },
-                                            val: function(values){
-                                                values.module = 'INSTALLER';
-                                                if(typeof values.owner === 'undefined'){
-                                                    values.owner = Steps.identification.form.input('organization').val();
-                                                }
-                                                return values;
+                                            callback:{
+                                                val: function(values){
+                                                    values.module = 'INSTALLER';
+                                                    if(typeof values.owner === 'undefined'){
+                                                        values.owner = Steps.identification.form.input('organization').val();
+                                                    }
+                                                    return values;
+                                                },
                                             },
                                         },
                                         function(form, component){

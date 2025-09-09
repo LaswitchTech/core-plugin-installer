@@ -974,7 +974,7 @@
 
                                 // Styling
                                 step.content.container = $(document.createElement('div')).addClass('d-flex flex-column align-items-center justify-content-center').appendTo(step.content);
-                                step.spinner = $(document.createElement('div')).addClass('spinner-border text-primary d-flex justify-content-center align-items-center').css({height: "64px",width: "64px",font-size: "calc(var(--bs-body-font-size) * 2.5)"}).appendTo(step.content.container);
+                                step.spinner = $(document.createElement('div')).addClass('spinner-border text-primary d-flex justify-content-center align-items-center').css({"height": "64px","width": "64px","font-size": "calc(var(--bs-body-font-size) * 2.5)"}).appendTo(step.content.container);
                                 step.label = $(document.createElement('div')).addClass('h5 m-0 mt-4').text('<?= $this->Locale->get("Preparing to install...") ?>').appendTo(step.content.container);
 
                                 // Handle the collapse events to update the step control

@@ -935,13 +935,14 @@
                                             col.card.header.title = $(document.createElement('h5')).addClass('m-0 fw-light user-select-none').text(name.charAt(0).toUpperCase() + name.slice(1)).appendTo(col.card.header);
                                             col.card.body = $(document.createElement('div')).addClass('card-body p-0').appendTo(col.card);
                                             for(const [key, value] of Object.entries(Step.form.val())){
-                                                if(key == 'module') continue;
-                                                const border = (key == Object.keys(Step.form.val())[0]) ? '' : 'border-top';
-                                                const obj = $(document.createElement('div')).addClass('card-value p-3 py-2 ' + border).appendTo(col.card.body).click(function(){
-                                                    builder.Helper.copyToClipboard(value);
-                                                });
-                                                obj.label = $(document.createElement('h6')).addClass('fw-light opacity-50 m-0 user-select-none').text(Step.form.input(key).label()).appendTo(obj);
-                                                obj.value = $(document.createElement('p')).addClass('m-0').text((value) ? value : '-').appendTo(obj);
+                                                if(Step.form.input(key) !== null){
+                                                    const border = (key == Object.keys(Step.form.val())[0]) ? '' : 'border-top';
+                                                    const obj = $(document.createElement('div')).addClass('card-value p-3 py-2 ' + border).appendTo(col.card.body).click(function(){
+                                                        builder.Helper.copyToClipboard(value);
+                                                    });
+                                                    obj.label = $(document.createElement('h6')).addClass('fw-light opacity-50 m-0 user-select-none').text(Step.form.input(key).label()).appendTo(obj);
+                                                    obj.value = $(document.createElement('p')).addClass('m-0').text((value) ? value : '-').appendTo(obj);
+                                                }
                                             }
                                         }
                                     }

@@ -186,20 +186,13 @@
                                                 label.text("<?= $this->Locale->get('Configuring and Creating Database...') ?>");
 
                                                 // Start the installation
-                                                $.ajax({
-                                                    url: '/api/installer/install',
-                                                    headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                                    type: 'POST',dataType: 'json',
-                                                    data: step.form.val(),
-                                                    error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
-                                                        label.text("<?= $this->Locale->get('Error configuring or creating database!') ?>").css('color', 'red');
-                                                        reject(new Error(xhr.responseJSON.message ?? error));
-                                                    },
-                                                    success: function(response) {
-                                                        label.text("<?= $this->Locale->get('Database Configured and Created Successfully.') ?>");
-                                                        resolve();
-                                                    }
+                                                API.endpoint('/installer/install').data(step.form.val()).execute(function(response){
+                                                    label.text("<?= $this->Locale->get('Database Configured and Created Successfully.') ?>");
+                                                    resolve();
+                                                },function(xhr, status, error){
+                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    label.text("<?= $this->Locale->get('Error configuring or creating database!') ?>").css('color', 'red');
+                                                    reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
                                             } catch (error) {
                                                 reject(error);
@@ -354,20 +347,13 @@
                                                 label.text("<?= $this->Locale->get('Configuring SMTP Server...') ?>");
 
                                                 // Start the installation
-                                                $.ajax({
-                                                    url: '/api/installer/install',
-                                                    headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                                    type: 'POST',dataType: 'json',
-                                                    data: step.form.val(),
-                                                    error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
-                                                        label.text("<?= $this->Locale->get('Error configuring SMTP server!') ?>").css('color', 'red');
-                                                        reject(new Error(xhr.responseJSON.message ?? error));
-                                                    },
-                                                    success: function(response) {
-                                                        label.text("<?= $this->Locale->get('SMTP service configured!') ?>");
-                                                        resolve();
-                                                    }
+                                                API.endpoint('/installer/install').data(step.form.val()).execute(function(response){
+                                                    label.text("<?= $this->Locale->get('SMTP service configured!') ?>");
+                                                    resolve();
+                                                },function(xhr, status, error){
+                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    label.text("<?= $this->Locale->get('Error configuring SMTP server!') ?>").css('color', 'red');
+                                                    reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
                                             } catch (error) {
                                                 reject(error);
@@ -522,20 +508,13 @@
                                                 label.text("<?= $this->Locale->get('Configuring IMAP Server...') ?>");
 
                                                 // Start the installation
-                                                $.ajax({
-                                                    url: '/api/installer/install',
-                                                    headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                                    type: 'POST',dataType: 'json',
-                                                    data: step.form.val(),
-                                                    error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
-                                                        label.text("<?= $this->Locale->get('Error configuring IMAP server!') ?>").css('color', 'red');
-                                                        reject(new Error(xhr.responseJSON.message ?? error));
-                                                    },
-                                                    success: function(response) {
-                                                        label.text("<?= $this->Locale->get('IMAP service configured!') ?>");
-                                                        resolve();
-                                                    }
+                                                API.endpoint('/installer/install').data(step.form.val()).execute(function(response){
+                                                    label.text("<?= $this->Locale->get('IMAP service configured!') ?>");
+                                                    resolve();
+                                                },function(xhr, status, error){
+                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    label.text("<?= $this->Locale->get('Error configuring IMAP server!') ?>").css('color', 'red');
+                                                    reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
                                             } catch (error) {
                                                 reject(error);
@@ -553,57 +532,41 @@
                         <?php if(!empty($this->call('modules')) || !empty($this->call('plugins')) || !empty($this->call('themes'))): ?>
 
                             // AJAX Request
-                            $.ajax({
-                                url: '/api/installer/required',
-                                headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                type: 'GET',dataType: 'json',
-                                error: function(xhr, status, error) {
-                                    console.error('Error retrieving required extensions:', error);
-                                    reject(error);
-                                },
-                                success: function(response) {
+                            API.endpoint('/installer/required').execute(function(response){
 
-                                    // Loop through the records
-                                    for(const [type, extensions] of Object.entries(response)){
-                                        if(['modules','plugins','themes'].includes(type)){
-                                            for(const [key, extension] of Object.entries(extensions)){
+                                // Loop through the records
+                                for(const [type, extensions] of Object.entries(response)){
+                                    if(['modules','plugins','themes'].includes(type)){
+                                        for(const [key, extension] of Object.entries(extensions)){
 
-                                                // Add a promise to the promises array
-                                                Promises.extensions.push(function(label, spinner, length = 0, key = 0){
-                                                    return new Promise((resolve, reject) => {
+                                            // Add a promise to the promises array
+                                            Promises.extensions.push(function(label, spinner, length = 0, key = 0){
+                                                return new Promise((resolve, reject) => {
 
-                                                        // Try & Catch
-                                                        try {
+                                                    // Try & Catch
+                                                    try {
 
-                                                            // Update the label
-                                                            label.text("<?= $this->Locale->get('Installing Required Extensions') ?> ("+type+":"+extension+")... (" + key + " of " + length + ")");
+                                                        // Update the label
+                                                        label.text("<?= $this->Locale->get('Installing Required Extensions') ?> ("+type+":"+extension+")... (" + key + " of " + length + ")");
 
-                                                            // AJAX Request
-                                                            $.ajax({
-                                                                url: '/api/extensions/install?type='+type+'&base='+extension,
-                                                                headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                                                type: 'GET',dataType: 'json',
-                                                                error: function(xhr, status, error) {
-                                                                    console.error('Error installing this extension:', error);
-                                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
-                                                                    label.text("<?= $this->Locale->get('Error Installing Extension') ?> ("+type+":"+extension+")...").css('color', 'red');
-                                                                    reject(error);
-                                                                },
-                                                                success: function(response) {
-
-                                                                    // Resolve the promise
-                                                                    resolve();
-                                                                },
-                                                            });
-                                                        } catch (error) {
+                                                        // AJAX Request
+                                                        API.endpoint('/extensions/install?type='+type+'&base='+extension).execute(function(response){
+                                                            resolve();
+                                                        },function(xhr, status, error){
+                                                            spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
+                                                            label.text("<?= $this->Locale->get('Error Installing Extension') ?> ("+type+":"+extension+")...").css('color', 'red');
                                                             reject(error);
-                                                        }
-                                                    });
+                                                        });
+                                                    } catch (error) {
+                                                        reject(error);
+                                                    }
                                                 });
-                                            }
+                                            });
                                         }
                                     }
-                                },
+                                }
+                            },function(xhr, status, error){
+                                reject(error);
                             });
                         <?php endif; ?>
 
@@ -709,20 +672,13 @@
                                                 label.text("<?= $this->Locale->get('Configuring Authentication Service...') ?>");
 
                                                 // Start the installation
-                                                $.ajax({
-                                                    url: '/api/installer/install',
-                                                    headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                                    type: 'POST',dataType: 'json',
-                                                    data: step.form.val(),
-                                                    error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
-                                                        label.text("<?= $this->Locale->get('Error configuring authentication service!') ?>").css('color', 'red');
-                                                        reject(new Error(xhr.responseJSON.message ?? error));
-                                                    },
-                                                    success: function(response) {
-                                                        label.text("<?= $this->Locale->get('Authentication service configured!') ?>");
-                                                        resolve();
-                                                    }
+                                                API.endpoint('/installer/install').data(step.form.val()).execute(function(response){
+                                                    label.text("<?= $this->Locale->get('Authentication service configured!') ?>");
+                                                    resolve();
+                                                },function(xhr, status, error){
+                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    label.text("<?= $this->Locale->get('Error configuring authentication service!') ?>").css('color', 'red');
+                                                    reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
                                             } catch (error) {
                                                 reject(error);
@@ -877,20 +833,13 @@
                                                 label.text("<?= $this->Locale->get('Configuring Application...') ?>");
 
                                                 // Start the installation
-                                                $.ajax({
-                                                    url: '/api/installer/install',
-                                                    headers: {'X-CSRF-Authorization': CSRF_KEY},
-                                                    type: 'POST',dataType: 'json',
-                                                    data: step.form.val(),
-                                                    error: function(xhr, status, error) {
-                                                        spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
-                                                        label.text("<?= $this->Locale->get('Error configuring application!') ?>").css('color', 'red');
-                                                        reject(new Error(xhr.responseJSON.message ?? error));
-                                                    },
-                                                    success: function(response) {
-                                                        label.text("<?= $this->Locale->get('Application configured!') ?>");
-                                                        resolve();
-                                                    }
+                                                API.endpoint('/installer/install').data(step.form.val()).execute(function(response){
+                                                    label.text("<?= $this->Locale->get('Application configured!') ?>");
+                                                    resolve();
+                                                },function(xhr, status, error){
+                                                    spinner.removeClass('spinner-border').addClass('rounded-circle border border-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    label.text("<?= $this->Locale->get('Error configuring application!') ?>").css('color', 'red');
+                                                    reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
                                             } catch (error) {
                                                 reject(error);

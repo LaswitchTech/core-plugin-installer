@@ -190,7 +190,7 @@
                                                     label.text("<?= $this->Locale->get('Database Configured and Created Successfully.') ?>");
                                                     resolve();
                                                 },function(xhr, status, error){
-                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-2 border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
                                                     label.text("<?= $this->Locale->get('Error configuring or creating database!') ?>").css('color', 'red');
                                                     reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
@@ -351,7 +351,7 @@
                                                     label.text("<?= $this->Locale->get('SMTP service configured!') ?>");
                                                     resolve();
                                                 },function(xhr, status, error){
-                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-2 border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
                                                     label.text("<?= $this->Locale->get('Error configuring SMTP server!') ?>").css('color', 'red');
                                                     reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
@@ -512,7 +512,7 @@
                                                     label.text("<?= $this->Locale->get('IMAP service configured!') ?>");
                                                     resolve();
                                                 },function(xhr, status, error){
-                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-2 border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
                                                     label.text("<?= $this->Locale->get('Error configuring IMAP server!') ?>").css('color', 'red');
                                                     reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
@@ -553,7 +553,7 @@
                                                         API.endpoint('/extensions/install?type='+type+'&base='+extension).execute(function(response){
                                                             resolve();
                                                         },function(xhr, status, error){
-                                                            spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
+                                                            spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-2 border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
                                                             label.text("<?= $this->Locale->get('Error Installing Extension') ?> ("+type+":"+extension+")...").css('color', 'red');
                                                             reject(error);
                                                         });
@@ -676,7 +676,7 @@
                                                     label.text("<?= $this->Locale->get('Authentication service configured!') ?>");
                                                     resolve();
                                                 },function(xhr, status, error){
-                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-2 border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
                                                     label.text("<?= $this->Locale->get('Error configuring authentication service!') ?>").css('color', 'red');
                                                     reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
@@ -837,7 +837,7 @@
                                                     label.text("<?= $this->Locale->get('Application configured!') ?>");
                                                     resolve();
                                                 },function(xhr, status, error){
-                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
+                                                    spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-2 border-danger text-danger').html('<i class="bi bi-x-lg"></i>');
                                                     label.text("<?= $this->Locale->get('Error configuring application!') ?>").css('color', 'red');
                                                     reject(new Error(xhr.responseJSON.message ?? error));
                                                 });
@@ -948,7 +948,7 @@
                                     step.label.text("<?= $this->Locale->get('Installation Completed!') ?>");
 
                                     // Redirect to the home page after spinner spinner-100 of 5 seconds
-                                    step.spinner.removeClass('spinner-border').addClass('rounded-circle border border-primary').text('5');
+                                    step.spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-2 text-success border-success').text('5');
                                     var count = 5;
                                     var interval = setInterval(() => {
                                         count--;

@@ -948,7 +948,7 @@
                                     step.label.text("<?= $this->Locale->get('Installation Completed!') ?>");
 
                                     // Redirect to the home page after spinner spinner-100 of 5 seconds
-                                    step.spinner.removeClass('spinner-border').addClass('rounded-circle border border-primary').text('5');
+                                    step.spinner.removeClass('spinner-border text-primary').addClass('rounded-circle border border-2 text-success border-success').text('5');
                                     var count = 5;
                                     var interval = setInterval(() => {
                                         count--;
